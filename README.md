@@ -13,12 +13,11 @@ The CNG provider must be installed on all servers which are to be clients to the
 
 Once the CNG provider is installed, it must be configured to connect to a YubiHSM connector.  If you are running the client and server on the same machine, using the default port, and using the default authentication key (authkey) and the default password (which should NEVER be done in a production environment), you would configure the the CNG provider using the below three registry values using PowerShell or any other means.
 
+``` PowerShell
 Set-ItemProperty -path HKLM:\SOFTWARE\Yubico\YubiHSM -name AuthKeysetID -Type DWord -Value 1
-
 Set-ItemProperty -path HKLM:\SOFTWARE\Yubico\YubiHSM -name AuthKeysetPassword -Type String -Value password
-
 Set-ItemProperty -path HKLM:\SOFTWARE\Yubico\YubiHSM -name ConnectorURL -Type String -Value http://127.0.0.1:12345
-
+```
 
 The YubiHSM2 device has the capability of holding multiple authkeys (https://developers.yubico.com/YubiHSM2/Concepts/Object.html).  These authkeys can be thought of as synonymous with user accounts in a Windows environment.  Each authkey can have a different password, just like each user on a Windows system can have a different password. The YubiHSM2 device also has the concept of domains (https://developers.yubico.com/YubiHSM2/Concepts/Domain.html). This has nothing at all to do with Windows domains, but can be thought of as synonymous with security groups used in a Windows environment. Each authkey (or any other object) can belong to one or more domains. This provides logical seperation of keys when multiple applications are utilizing the same YubiHSM2 device.
 
