@@ -7,7 +7,11 @@ Once the YubiHSM Key Storage Provider has been [installed and configured](../REA
 By either:
 
 - using certreq.exe with an inf file with "RSA, YubiHSM Key Storage Provider" specified as the CSP
-- using certificate MMC custom enrollment with "RSA, YubiHSM Key Storage Provider" specified as the CSP
+- using PowerShell:
+
+```
+New-SelfSignedCertificate -Provider "YubiHSM Key Storage Provider" -KeyLength 2048 -HashAlgorithm SHA256 -KeyUsage DigitalSignature,KeyEncipherment -NotAfter (Get-Date).AddYears(5) -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.1") -KeyAlgorithm RSA -KeyExportPolicy NonExportable -KeyUsageProperty Sign -Subject "CN=some string of your choosing here"
+```
 - using using certificate MMC and submit directly to a CA using a template configured with CSP only "RSA, YubiHSM Key Storage Provider"
 
 If using CSR, get it signed and import the CA response file.
